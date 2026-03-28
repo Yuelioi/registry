@@ -10,7 +10,7 @@ Read [PUBLISHING.md](./PUBLISHING.md) for the full submission guide.
 
 **Quick summary:**
 
-1. Host your plugin on GitHub (with a `plugin.json` and `index.js` at the repo root)
+1. Host your plugin on GitHub (with a `package.json` containing a `"plugin"` field, and a built `index.js`)
 2. Create a GitHub Release with a version tag
 3. Fork this repo, add your entry to `registry.json`, open a PR
 4. CI validates the entry — once merged, it appears in the marketplace

@@ -3,7 +3,7 @@
 ## 前置要求
 
 - 插件仓库托管在 GitHub 或 Gitee
-- 仓库根目录有 `plugin.json`（格式见 [README](./README.md)）
+- 仓库 `package.json` 含有 `"plugin"` 字段（格式见 [README](./README.md)）
 - 插件可正常安装运行
 
 ## 发布流程
@@ -14,12 +14,12 @@
 
 ```
 your-plugin/
-├── plugin.json   ← 必须（包含 name、title、description、version、author）
-├── index.js      ← 编译后的单文件脚本（JS 插件必须）
+├── package.json  ← 必须（含 "plugin" 字段，包含 name、title、description、version、author）
+├── index.js      ← 编译后的单文件脚本
 └── README.md     ← 建议提供
 ```
 
-`plugin.json` 中的 `name` 建议使用 `your-github-username/plugin-slug` 格式，安装后不可更改。
+`package.json` 中 `"plugin"` 字段的 `name` 建议使用 `your-github-username/plugin-slug` 格式，安装后不可更改。
 
 ### 2. 发布 Release（推荐）
 
