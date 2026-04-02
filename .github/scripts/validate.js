@@ -7,7 +7,10 @@ const path = require('path')
 const { execSync } = require('child_process')
 
 const REQUIRED_FIELDS = ['name', 'title', 'description', 'version', 'author', 'repo', 'published_at', 'updated_at']
-const VALID_TYPES = ['hook', 'integration', 'theme']
+const VALID_TYPES = ['hook', 'integration', 'theme', 'editor', 'analytics', 'moderation']
+const VALID_TRUST_LEVELS = ['official', 'community', 'local']
+const VALID_CAPABILITIES = ['http', 'store', 'db', 'ai', 'events']
+const VALID_FEATURES = ['admin_js', 'public_js', 'routes', 'contributes', 'migrations', 'pages', 'service', 'pipelines', 'webhooks', 'lifecycle']
 
 let exitCode = 0
 
@@ -142,6 +145,47 @@ for (const filePath of changedFiles) {
   if (plugin.version) {
     check(/^\d+\.\d+\.\d+/.test(plugin.version),
       `${prefix}: version 应遵循 semver 格式，如 1.0.0`)
+  }
+
+  // ── v2 fields ──────────────────────────────────────────────────────────────
+
+  // min_host_version
+  if (plugin.min_host_version !== undefined && plugin.min_host_version !== '') {
+    check(/^\d+\.\d+\.\d+/.test(plugin.min_host_version),
+      `${prefix}: min_host_version 应遵循 semver 格式，如 2.0.0`)
+  }
+
+  // sdk_version
+  if (plugin.sdk_version !== undefined && plugin.sdk_version !== '') {
+    check(/^\d+\.\d+\.\d+/.test(plugin.sdk_version),
+      `${prefix}: sdk_version 应遵循 semver 格式，如 0.1.0`)
+  }
+
+  // trust_level
+  if (plugin.trust_level !== undefined && plugin.trust_level !== '') {
+    check(VALID_TRUST_LEVELS.includes(plugin.trust_level),
+      `${prefix}: trust_level 无效，可选值: ${VALID_TRUST_LEVELS.join(', ')}`)
+    // official trust_level cannot be self-assigned in PRs (same as is_official)
+    check(plugin.trust_level !== 'official',
+      `${prefix}: trust_level 不允许在 PR 中自行设为 "official"，由维护者审核后标注`)
+  }
+
+  // capabilities
+  if (plugin.capabilities !== undefined) {
+    check(Array.isArray(plugin.capabilities), `${prefix}: capabilities 必须是数组`)
+    for (const cap of plugin.capabilities || []) {
+      check(typeof cap === 'string' && VALID_CAPABILITIES.includes(cap),
+        `${prefix}: capability "${cap}" 无效，可选值: ${VALID_CAPABILITIES.join(', ')}`)
+    }
+  }
+
+  // features
+  if (plugin.features !== undefined) {
+    check(Array.isArray(plugin.features), `${prefix}: features 必须是数组`)
+    for (const feat of plugin.features || []) {
+      check(typeof feat === 'string' && VALID_FEATURES.includes(feat),
+        `${prefix}: feature "${feat}" 无效，可选值: ${VALID_FEATURES.join(', ')}`)
+    }
   }
 
   if (exitCode === 0) {
