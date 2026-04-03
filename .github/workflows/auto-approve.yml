@@ -9,18 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ⏳ 等 GitHub 计算 mergeable（必须）
+      # ⏳ 等 GitHub 计算 mergeable（避免 null）
       - name: Wait for mergeable status
         run: sleep 5
 
-      # 🔑 生成 GitHub App token
+      # 🔑 生成 GitHub App token（已修正）
       - name: Generate App Token
         id: app-token
         uses: tibdex/github-app-token@v2
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
-          installation_id: ${{ secrets.APP_INSTALLATION_ID }}
 
       # 🔍 获取 PR 状态
       - name: Check PR
@@ -35,10 +34,13 @@ jobs:
               pull_number: context.payload.pull_request.number
             });
 
+            core.info("Mergeable: " + pr.data.mergeable);
+            core.info("Draft: " + pr.data.draft);
+
             core.setOutput("mergeable", pr.data.mergeable);
             core.setOutput("draft", pr.data.draft);
 
-      # ✅ 自动 approve
+      # ✅ 自动 approve（仅无冲突 + 非 draft）
       - name: Approve PR
         if: steps.check.outputs.mergeable == 'true' && steps.check.outputs.draft == 'false'
         uses: actions/github-script@v6
@@ -66,7 +68,7 @@ jobs:
               merge_method: "squash"
             });
 
-      # ❌ 有冲突提示
+      # ❌ 有冲突时提示（可选）
       - name: Comment if conflict
         if: steps.check.outputs.mergeable != 'true'
         uses: actions/github-script@v6
