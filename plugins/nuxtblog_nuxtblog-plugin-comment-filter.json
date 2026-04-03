@@ -11,7 +11,6 @@
   "type": "moderation",
   "is_official": true,
   "license": "MIT",
-  "min_host_version": "",
   "sdk_version": "",
   "trust_level": "official",
   "capabilities": [],

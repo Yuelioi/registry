@@ -147,14 +147,6 @@ for (const filePath of changedFiles) {
       `${prefix}: version 应遵循 semver 格式，如 1.0.0`)
   }
 
-  // ── v2 fields ──────────────────────────────────────────────────────────────
-
-  // min_host_version
-  if (plugin.min_host_version !== undefined && plugin.min_host_version !== '') {
-    check(/^\d+\.\d+\.\d+/.test(plugin.min_host_version),
-      `${prefix}: min_host_version 应遵循 semver 格式，如 2.0.0`)
-  }
-
   // sdk_version
   if (plugin.sdk_version !== undefined && plugin.sdk_version !== '') {
     check(/^\d+\.\d+\.\d+/.test(plugin.sdk_version),

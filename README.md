@@ -28,17 +28,16 @@ Read [PUBLISHING.md](./PUBLISHING.md) for the full submission guide.
 | `analytics` | Data tracking and analytics |
 | `moderation` | Content moderation and security |
 
-## v2 fields
+## Extended fields
 
-Plugins targeting host version 2.0.0+ can declare additional fields:
+Plugins can declare additional fields:
 
 | Field | Description |
 |---|---|
-| `min_host_version` | Minimum host version required (e.g. `2.0.0`) |
 | `sdk_version` | Plugin SDK version used |
 | `trust_level` | Security level: `official` / `community` / `local` |
 | `capabilities` | Platform APIs used: `http`, `store`, `db`, `ai`, `events` |
-| `features` | v2 features: `admin_js`, `public_js`, `routes`, `contributes`, `migrations`, `pages`, `service`, `pipelines`, `webhooks`, `lifecycle` |
+| `features` | Features used: `admin_js`, `public_js`, `routes`, `contributes`, `migrations`, `pages`, `service`, `pipelines`, `webhooks`, `lifecycle` |
 
 ## Plugin SDK
 

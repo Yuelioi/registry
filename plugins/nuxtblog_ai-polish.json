@@ -16,7 +16,6 @@
   "type": "editor",
   "is_official": true,
   "license": "MIT",
-  "min_host_version": "2.0.0",
   "sdk_version": "0.1.0",
   "trust_level": "official",
   "capabilities": [
