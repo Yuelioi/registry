@@ -10,7 +10,7 @@ Read [PUBLISHING.md](./PUBLISHING.md) for the full submission guide.
 
 **Quick summary:**
 
-1. Host your plugin on GitHub (with a `package.json` containing a `"plugin"` field, and a built `index.js`)
+1. Host your plugin on GitHub with `plugin.yaml` + source code
 2. Create a GitHub Release with a version tag
 3. Fork this repo, add a JSON file to `plugins/` directory, open a PR
 4. CI validates the entry — once merged, `registry.json` is auto-rebuilt and the plugin appears in the marketplace
@@ -19,14 +19,29 @@ Read [PUBLISHING.md](./PUBLISHING.md) for the full submission guide.
 
 ## Plugin types
 
-| type | Description |
-|---|---|
-| `hook` | Listens to or intercepts blog events |
-| `integration` | Third-party service integrations (analytics, comments, search, etc.) |
-| `theme` | CSS-only themes and style overrides |
-| `editor` | Editor enhancements (AI polish, toolbar extensions, etc.) |
-| `analytics` | Data tracking and analytics |
-| `moderation` | Content moderation and security |
+| type | runtime | Description |
+|---|---|---|
+| `builtin` | `compiled` | Go 编译插件，内置到服务端二进制 |
+| `js` | `interpreted` | JavaScript 插件（Goja 引擎解释执行） |
+| `yaml` | `interpreted` | 声明式 YAML 插件（零代码 Webhook、过滤规则） |
+| `ui` | — | 纯前端插件（Vue 组件，admin/public） |
+| `full` | `compiled` | 全栈插件（Go 后端 + Vue 前端） |
+
+## Plugin structure
+
+```
+your-plugin/
+├── plugin.yaml     ← 统一配置清单（必须）
+├── plugin.js       ← JS 源码（type: js / full）
+├── .github/
+│   └── workflows/
+│       └── release.yml  ← 发布工作流
+└── frontend/       ← 前端源码（type: ui / full）
+    ├── package.json
+    ├── vite.config.ts
+    ├── admin/      ← 管理后台组件
+    └── public/     ← 前台组件
+```
 
 ## Extended fields
 
@@ -34,17 +49,8 @@ Plugins can declare additional fields:
 
 | Field | Description |
 |---|---|
+| `runtime` | Execution runtime: `compiled` (Go builtin) / `interpreted` (Goja JS) |
 | `sdk_version` | Plugin SDK version used |
 | `trust_level` | Security level: `official` / `community` / `local` |
 | `capabilities` | Platform APIs used: `http`, `store`, `db`, `ai`, `events` |
-| `features` | Features used: `admin_js`, `public_js`, `routes`, `contributes`, `migrations`, `pages`, `service`, `pipelines`, `webhooks`, `lifecycle` |
-
-## Plugin SDK
-
-To develop a plugin with full TypeScript support:
-
-```bash
-npm install -D @nuxtblog/plugin-sdk
-```
-
-See [@nuxtblog/plugin-sdk](https://github.com/nuxtblog/plugin-sdk) for documentation.
+| `features` | Features used: `routes`, `filters`, `events`, `migrations`, `admin_js`, `public_js`, `pages`, `contributes` |

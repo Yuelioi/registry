@@ -1,28 +1,40 @@
 [
   {
     "name": "nuxtblog-plugin-ai-polish",
-    "title": "AI 写作助手",
-    "description": "AI 写作助手：润色、摘要、从 URL 生成文章。展示 routes + contributes + admin_js + AI 服务全链路",
-    "version": "1.0.4",
+    "title": "AI 润色",
+    "description": "AI 驱动的内容润色、摘要生成、标签推荐和翻译",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-sparkles",
     "repo": "nuxtblog/nuxtblog-plugin-ai-polish",
     "homepage": "https://github.com/nuxtblog/nuxtblog-plugin-ai-polish",
     "tags": [
       "ai",
-      "editor"
+      "writing",
+      "tools"
     ],
-    "type": "hook",
-    "is_official": false,
+    "type": "builtin",
+    "runtime": "compiled",
+    "is_official": true,
     "license": "MIT",
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "capabilities": [
+      "http",
+      "store"
+    ],
+    "features": [
+      "routes",
+      "events"
+    ],
     "published_at": "2026-04-03T02:07:35.731Z",
-    "updated_at": "2026-04-03T03:54:25.211Z"
+    "updated_at": "2026-04-08"
   },
   {
     "name": "nuxtblog-plugin-comment-guard",
     "title": "评论防护",
-    "description": "评论防护：垃圾过滤 + 速率限制 + AI 审核 + Webhook 通知。展示 filter chain + pipeline + webhook + 插件间通信",
-    "version": "1.0.3",
+    "description": "评论反垃圾：关键词屏蔽、邮箱域名过滤、链接检测、速率限制、长度限制",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-shield-check",
     "repo": "nuxtblog/nuxtblog-plugin-comment-guard",
@@ -32,17 +44,28 @@
       "spam",
       "moderation"
     ],
-    "type": "pipeline",
+    "type": "builtin",
+    "runtime": "compiled",
     "is_official": true,
     "license": "MIT",
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "capabilities": [
+      "store"
+    ],
+    "features": [
+      "filters",
+      "routes",
+      "events"
+    ],
     "published_at": "2026-04-03T00:00:00.000Z",
-    "updated_at": "2026-04-03T03:55:17.473Z"
+    "updated_at": "2026-04-08"
   },
   {
     "name": "nuxtblog-plugin-view-counter",
     "title": "浏览量统计",
-    "description": "精准文章浏览量统计。展示 DB Migration + store + 自定义路由 + public_js + 前端页面",
-    "version": "1.0.4",
+    "description": "精准文章浏览量统计与可视化分析仪表盘",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-chart-bar",
     "repo": "nuxtblog/nuxtblog-plugin-view-counter",
@@ -51,17 +74,34 @@
       "analytics",
       "views"
     ],
-    "type": "hook",
+    "type": "full",
+    "runtime": "compiled",
     "is_official": true,
     "license": "MIT",
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "capabilities": [
+      "store",
+      "db"
+    ],
+    "features": [
+      "routes",
+      "migrations",
+      "admin_js",
+      "public_js",
+      "pages",
+      "filters",
+      "events",
+      "contributes"
+    ],
     "published_at": "2026-04-03T00:00:00.000Z",
-    "updated_at": "2026-04-03T03:56:28.064Z"
+    "updated_at": "2026-04-08"
   },
   {
     "name": "nuxtblog-plugin-telegram-notify",
     "title": "Telegram 通知",
-    "description": "文章发布后通过 Telegram Bot 推送通知到指定频道或群组",
-    "version": "0.1.4",
+    "description": "文章发布/更新时通过 Telegram Bot 推送通知",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-brand-telegram",
     "repo": "nuxtblog/nuxtblog-plugin-telegram-notify",
@@ -70,38 +110,26 @@
       "telegram",
       "notification"
     ],
-    "type": "hook",
+    "type": "builtin",
+    "runtime": "compiled",
     "is_official": true,
     "license": "MIT",
-    "published_at": "2026-04-01T16:42:00.067Z",
-    "updated_at": "2026-04-03T03:56:04.918Z"
-  },
-  {
-    "name": "nuxtblog-plugin-comment-filter",
-    "title": "评论过滤",
-    "description": "评论垃圾过滤：关键词黑名单、邮箱域名屏蔽、链接密度检测、长度限制",
-    "version": "0.1.3",
-    "author": "nuxtblog",
-    "icon": "i-tabler-shield-check",
-    "repo": "nuxtblog/nuxtblog-plugin-comment-filter",
-    "homepage": "https://github.com/nuxtblog/nuxtblog-plugin-comment-filter",
-    "tags": [
-      "spam",
-      "comment",
-      "filter",
-      "moderation"
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "capabilities": [
+      "http"
     ],
-    "type": "hook",
-    "is_official": true,
-    "license": "MIT",
-    "published_at": "2026-04-01T16:41:55.266Z",
-    "updated_at": "2026-04-03T02:37:29.227Z"
+    "features": [
+      "events"
+    ],
+    "published_at": "2026-04-01T16:42:00.067Z",
+    "updated_at": "2026-04-08"
   },
   {
     "name": "nuxtblog-plugin-reading-time",
     "title": "阅读时间",
     "description": "在文章渲染时自动计算并注入阅读时间提示",
-    "version": "0.1.5",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-clock",
     "repo": "nuxtblog/nuxtblog-plugin-reading-time",
@@ -110,17 +138,23 @@
       "reading-time",
       "ux"
     ],
-    "type": "hook",
+    "type": "js",
+    "runtime": "interpreted",
     "is_official": true,
     "license": "MIT",
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "features": [
+      "filters"
+    ],
     "published_at": "2026-04-01T16:41:53.550Z",
-    "updated_at": "2026-04-03T03:55:40.995Z"
+    "updated_at": "2026-04-08"
   },
   {
     "name": "nuxtblog-plugin-auto-excerpt",
     "title": "自动摘要",
-    "description": "发布/修改文章时，自动从正文内容生成摘要（支持 Markdown / HTML 剥离）",
-    "version": "0.1.4",
+    "description": "发布/修改文章时，自动从正文生成摘要（支持 Markdown / HTML 剥离）",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-text-caption",
     "repo": "nuxtblog/nuxtblog-plugin-auto-excerpt",
@@ -129,17 +163,23 @@
       "excerpt",
       "seo"
     ],
-    "type": "hook",
+    "type": "js",
+    "runtime": "interpreted",
     "is_official": true,
     "license": "MIT",
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "features": [
+      "filters"
+    ],
     "published_at": "2026-04-01T16:41:49.852Z",
-    "updated_at": "2026-04-03T03:54:42.281Z"
+    "updated_at": "2026-04-08"
   },
   {
-    "name": "pinyin-slug",
+    "name": "nuxtblog-plugin-pinyin-slug",
     "title": "拼音 Slug",
-    "description": "发布/修改文章时，自动将中文标题转换为拼音 slug（支持中英文混排）",
-    "version": "0.0.8",
+    "description": "发布/修改文章时，自动将中文标题转换为拼音 slug",
+    "version": "2.0.0",
     "author": "nuxtblog",
     "icon": "i-tabler-language",
     "repo": "nuxtblog/nuxtblog-plugin-pinyin-slug",
@@ -149,10 +189,16 @@
       "chinese",
       "seo"
     ],
-    "type": "hook",
+    "type": "js",
+    "runtime": "interpreted",
     "is_official": true,
     "license": "MIT",
+    "sdk_version": "1.0.0",
+    "trust_level": "official",
+    "features": [
+      "filters"
+    ],
     "published_at": "2026-03-27T20:28:22.708Z",
-    "updated_at": "2026-04-03T03:55:25.238Z"
+    "updated_at": "2026-04-08"
   }
 ]

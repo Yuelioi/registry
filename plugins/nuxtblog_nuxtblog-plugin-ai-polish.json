@@ -1,19 +1,21 @@
 {
   "name": "nuxtblog-plugin-ai-polish",
-  "title": "AI 写作助手",
-  "description": "AI 写作助手：润色、摘要、从 URL 生成文章。展示 routes + contributes + admin_js + AI 服务全链路",
-  "version": "1.0.4",
+  "title": "AI 润色",
+  "description": "AI 驱动的内容润色、摘要生成、标签推荐和翻译",
+  "version": "2.0.0",
   "author": "nuxtblog",
   "icon": "i-tabler-sparkles",
   "repo": "nuxtblog/nuxtblog-plugin-ai-polish",
   "homepage": "https://github.com/nuxtblog/nuxtblog-plugin-ai-polish",
-  "tags": [
-    "ai",
-    "editor"
-  ],
-  "type": "hook",
-  "is_official": false,
+  "tags": ["ai", "writing", "tools"],
+  "type": "builtin",
+  "runtime": "compiled",
+  "is_official": true,
   "license": "MIT",
+  "sdk_version": "1.0.0",
+  "trust_level": "official",
+  "capabilities": ["http", "store"],
+  "features": ["routes", "events"],
   "published_at": "2026-04-03T02:07:35.731Z",
-  "updated_at": "2026-04-03T03:54:25.211Z"
+  "updated_at": "2026-04-08"
 }

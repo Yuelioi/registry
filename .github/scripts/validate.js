@@ -6,16 +6,17 @@ const fs = require('fs')
 const path = require('path')
 const { execSync } = require('child_process')
 
-const REQUIRED_FIELDS = ['name', 'title', 'description', 'version', 'author', 'repo', 'published_at', 'updated_at']
-const VALID_TYPES = ['hook', 'integration', 'theme', 'editor', 'analytics', 'moderation']
+const REQUIRED_FIELDS = ['name', 'title', 'description', 'version', 'author', 'repo', 'type', 'runtime', 'published_at', 'updated_at']
+const VALID_TYPES = ['builtin', 'js', 'yaml', 'ui', 'full']
+const VALID_RUNTIMES = ['compiled', 'interpreted']
 const VALID_TRUST_LEVELS = ['official', 'community', 'local']
 const VALID_CAPABILITIES = ['http', 'store', 'db', 'ai', 'events']
-const VALID_FEATURES = ['admin_js', 'public_js', 'routes', 'contributes', 'migrations', 'pages', 'service', 'pipelines', 'webhooks', 'lifecycle']
+const VALID_FEATURES = ['admin_js', 'public_js', 'routes', 'contributes', 'migrations', 'pages', 'filters', 'events']
 
 let exitCode = 0
 
 function fail(msg) {
-  console.error('❌', msg)
+  console.error('\u274c', msg)
   exitCode = 1
 }
 
@@ -55,7 +56,6 @@ for (const file of allPluginFiles) {
   try {
     plugin = JSON.parse(fs.readFileSync(filePath, 'utf-8'))
   } catch (e) {
-    // Only fail if this is one of the files we're validating
     if (changedFiles.includes(filePath)) {
       fail(`${filePath}: JSON 解析失败 — ${e.message}`)
     }
@@ -73,7 +73,6 @@ for (const file of allPluginFiles) {
 
 for (const filePath of changedFiles) {
   if (!fs.existsSync(filePath)) {
-    // File deleted — skip (deletion is always allowed)
     console.log(`ℹ️  ${filePath} 已删除，跳过`)
     continue
   }
@@ -108,6 +107,24 @@ for (const filePath of changedFiles) {
   if (plugin.type !== undefined) {
     check(VALID_TYPES.includes(plugin.type),
       `${prefix}: type 无效，可选值: ${VALID_TYPES.join(', ')}`)
+  }
+
+  // runtime
+  if (plugin.runtime !== undefined) {
+    check(VALID_RUNTIMES.includes(plugin.runtime),
+      `${prefix}: runtime 无效，可选值: ${VALID_RUNTIMES.join(', ')}`)
+  }
+
+  // type + runtime consistency
+  if (plugin.type && plugin.runtime) {
+    if (['builtin', 'full'].includes(plugin.type)) {
+      check(plugin.runtime === 'compiled',
+        `${prefix}: type "${plugin.type}" 的 runtime 应为 "compiled"`)
+    }
+    if (plugin.type === 'js' || plugin.type === 'yaml') {
+      check(plugin.runtime === 'interpreted',
+        `${prefix}: type "${plugin.type}" 的 runtime 应为 "interpreted"`)
+    }
   }
 
   // is_official
@@ -150,14 +167,13 @@ for (const filePath of changedFiles) {
   // sdk_version
   if (plugin.sdk_version !== undefined && plugin.sdk_version !== '') {
     check(/^\d+\.\d+\.\d+/.test(plugin.sdk_version),
-      `${prefix}: sdk_version 应遵循 semver 格式，如 0.1.0`)
+      `${prefix}: sdk_version 应遵循 semver 格式，如 1.0.0`)
   }
 
   // trust_level
   if (plugin.trust_level !== undefined && plugin.trust_level !== '') {
     check(VALID_TRUST_LEVELS.includes(plugin.trust_level),
       `${prefix}: trust_level 无效，可选值: ${VALID_TRUST_LEVELS.join(', ')}`)
-    // official trust_level cannot be self-assigned in PRs (same as is_official)
     check(plugin.trust_level !== 'official',
       `${prefix}: trust_level 不允许在 PR 中自行设为 "official"，由维护者审核后标注`)
   }
