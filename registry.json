@@ -176,7 +176,7 @@
     "name": "nuxtblog-plugin-auto-excerpt",
     "title": "自动摘要",
     "description": "发布/修改文章时，自动从正文生成摘要（支持 Markdown / HTML 剥离）",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "author": "nuxtblog",
     "icon": "i-tabler-text-caption",
     "repo": "nuxtblog/nuxtblog-plugin-auto-excerpt",
@@ -191,11 +191,12 @@
     "license": "MIT",
     "sdk_version": "1.0.0",
     "trust_level": "official",
+    "capabilities": [],
     "features": [
       "filters"
     ],
     "published_at": "2026-04-01T16:41:49.852Z",
-    "updated_at": "2026-04-08"
+    "updated_at": "2026-04-08T10:55:03.667Z"
   },
   {
     "name": "nuxtblog-plugin-pinyin-slug",
